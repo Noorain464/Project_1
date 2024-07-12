@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react'
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, message } from "antd";
 import { Link , useNavigate } from "react-router-dom";
-
-import {message} from 'antd'
 
 
 function Login() {
@@ -24,7 +22,7 @@ function Login() {
         <section className="right-section">
           <Form layout="vertical" onFinish={onFinish}>
     
-          <Form.Item
+            <Form.Item
               label="Email"
               htmlFor="email"
               name="email"
