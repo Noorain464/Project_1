@@ -1,15 +1,28 @@
 import React, { useEffect } from 'react'
 import { Button, Form, Input, message } from "antd";
 import { Link , useNavigate } from "react-router-dom";
-
+import { LoginUser } from '../calls/users';
 
 function Login() {
-  
+  const navigate = useNavigate()
   const onFinish = async (values)=>{
-    console.log(values)
+    // console.log(values)
+    try {
+      const response = await LoginUser(values);
+      if(message.success){
+        message.success(response.message);
+        localStorage.setItem('token', response.token);
+        navigate('/');
+      }else{
+        message.error(response.message);
+      }
+    } catch (error) {
+      message.error(error.message);
+    }
    
   }
 
+  
  
   return (
     <>
