@@ -3,6 +3,7 @@ const User = require("../models/userModel");
 const bcrypt = require('bcrypt');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
+const authmiddleware = require('../middleware/authmiddleware');
 router.post("/register", async (req, res) => {
     try{
         const userExists = await User.findOne({email:req.body.email});
@@ -69,6 +70,21 @@ router.post("/login", async (req, res) => {
       }
 });
 
-router.get('get-current-user',)
+router.get('/get-current-user',authmiddleware,async(req,res)=>{
+    // select is used to discard by -;
+    try{
+        const user = await User.findbyId(req.body.userId).select('-password')
+        res.send({
+            success : true,
+            message : "You are Authorised",
+            data : user
+        })
+    }catch(error){
+        res.send({
+            success :  false,
+            message :  "not authorised"
+        })
+    }
+})
 
 module.exports = router;
